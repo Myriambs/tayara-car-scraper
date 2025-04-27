@@ -1,31 +1,44 @@
-name: CI Pipeline - Playwright Tests
+name: CI Pipeline
 
+# Trigger the workflow on push or pull request events
 on:
   push:
     branches:
-      - master  # Ou la branche sur laquelle tu souhaites que l'action soit lancée
+      - master  # or any branch you want to trigger the build from
   pull_request:
     branches:
-      - master
+      - master  # or the target branch for pull requests
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    
+  # Define a job called "build"
+  build:
+    runs-on: ubuntu-latest  # Use an Ubuntu runner (You can use windows-latest or macos-latest if needed)
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    # Step 1: Check out the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'  # Utilise la version de Node.js appropriée
+    # Step 2: Set up Node.js environment
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Specify your Node.js version here
 
-      - name: Install dependencies
-        run: npm install
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: npm install
 
-      - name: Run Playwright tests
-        run: npm test
-        env:
-          CI: true  # Déclenche l'environnement CI pour Playwright (optionnel)
+    # Step 4: Run tests (ensure you have a test script in your package.json)
+    - name: Run tests
+      run: npm test
+
+    # Step 5: Optionally, deploy your app (if needed)
+    # For example, using GitHub Pages or another platform
+    # Uncomment and replace this step with your deployment action
+    # - name: Deploy to GitHub Pages (example)
+    #   uses: JamesIves/github-pages-deploy-action@v4
+    #   with:
+    #     branch: gh-pages  # Deploy to gh-pages branch (or another branch of your choice)
+    #     folder: build     # Folder containing the build output (if applicable)
 
