@@ -1,0 +1,90 @@
+/* Conteneur général */
+div {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* Titre */
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Liste des voitures */
+.car-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Carte de voiture */
+.car-card {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Effet au survol de la carte */
+.car-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Image de la voiture */
+.car-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Nom de la voiture */
+.car-card h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 10px 0;
+  color: #333;
+}
+
+/* Prix de la voiture */
+.car-card p {
+  font-size: 1rem;
+  color: #777;
+  margin: 5px 0;
+}
+
+/* Lien "Voir plus" */
+.car-card a {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+/* Effet au survol du lien */
+.car-card a:hover {
+  background-color: #45a049;
+}
+
+/* Réactiver l'effet de survol lors du focus sur le lien */
+.car-card a:focus {
+  outline: none;
+}
