@@ -3,10 +3,10 @@ name: CI Pipeline - Playwright Tests
 on:
   push:
     branches:
-      - main  # Ou la branche sur laquelle tu souhaites que l'action soit lancée
+      - master  # Ou la branche sur laquelle tu souhaites que l'action soit lancée
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   test:
