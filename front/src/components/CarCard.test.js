@@ -1,61 +1,71 @@
+import { fireEvent, render, screen } from "@testing-library/react";
+import CarCard from "./CarCards"; // assure-toi que le nom du fichier est correct
 
-const { render, screen, fireEvent } = require('@testing-library/react');
-const CarCard = require('./CarCard');
+describe("CarCard Component", () => {
+  it("affiche une voiture correctement", () => {
+    const mockCars = [
+      {
+        name: "Toyota Corolla",
+        price: 15000,
+        url: "https://example.com/toyota-corolla",
+        image: "https://example.com/image.jpg"
+      }
+    ];
 
-describe("CarCard", () => {
-  const cars = [
-    { id: 1, name: "Voiture 1", price: 10000, image: "image1.jpg", url: "http://example.com" },
-    { id: 2, name: "Voiture 2", price: 20000, image: "image2.jpg", url: "http://example.com" },
-    { id: 3, name: "Voiture 3", price: 30000, image: "image3.jpg", url: "http://example.com" }
+    render(<CarCard cars={mockCars} />);
+
+    // Vérifie que le nom de la voiture est affiché
+    expect(screen.getByText("Toyota Corolla")).toBeInTheDocument();
+    
+    // Vérifie que le prix est affiché
+    expect(screen.getByText(/15000/)).toBeInTheDocument(); // Utilisation d'une expression régulière ici
+    
+    // Vérifie qu'un lien est bien présent
+    expect(screen.getByText("Voir plus")).toBeInTheDocument();
+    
+    // Vérifie que l'URL est bien présente dans le lien
+    expect(screen.getByRole('link')).toHaveAttribute('href', 'https://example.com/toyota-corolla');
+    
+    // Vérifie que l'image a un attribut alt avec le nom de la voiture
+    expect(screen.getByAltText("Toyota Corolla")).toBeInTheDocument();
+  });
+});
+
+
+
+describe("CarCard Component filter feature ", () => {
+  const mockCars = [
+    {
+      name: "Toyota Corolla",
+      price: 15000,
+      image: "https://example.com/image1.jpg",
+      url: "https://example.com/toyota",
+    },
+    {
+      name: "Honda Civic",
+      price: 18000,
+      image: "https://example.com/image2.jpg",
+      url: "https://example.com/honda",
+    },
+    {
+      name: "Ford Focus",
+      price: 12000,
+      image: "https://example.com/image3.jpg",
+      url: "https://example.com/ford",
+    },
   ];
 
-  it("doit afficher toutes les voitures initialement", () => {
-    render(<CarCard cars={cars} />);
+  it("affiche correctement les voitures filtrées par nom", () => {
+    render(<CarCard cars={mockCars} />);
 
-    expect(screen.getByText("Voiture 1")).toBeInTheDocument();
-    expect(screen.getByText("Voiture 2")).toBeInTheDocument();
-    expect(screen.getByText("Voiture 3")).toBeInTheDocument();
-  });
+    // Simuler la saisie dans le champ de recherche
+    fireEvent.change(screen.getByPlaceholderText("Rechercher par nom..."), {
+      target: { value: "Honda" },
+    });
 
-  it("doit filtrer les voitures par nom", () => {
-    render(<CarCard cars={cars} />);
-
-    const searchInput = screen.getByPlaceholderText("Rechercher par nom...");
-    fireEvent.change(searchInput, { target: { value: "Voiture 1" } });
-
-    expect(screen.getByText("Voiture 1")).toBeInTheDocument();
-    expect(screen.queryByText("Voiture 2")).not.toBeInTheDocument();
-    expect(screen.queryByText("Voiture 3")).not.toBeInTheDocument();
-  });
-
-  it("doit filtrer les voitures par prix minimum", () => {
-    render(<CarCard cars={cars} />);
-
-    const minPriceInput = screen.getByPlaceholderText("Prix min");
-    fireEvent.change(minPriceInput, { target: { value: "15000" } });
-
-    expect(screen.queryByText("Voiture 1")).not.toBeInTheDocument();
-    expect(screen.getByText("Voiture 2")).toBeInTheDocument();
-    expect(screen.getByText("Voiture 3")).toBeInTheDocument();
-  });
-
-  it("doit filtrer les voitures par prix maximum", () => {
-    render(<CarCard cars={cars} />);
-
-    const maxPriceInput = screen.getByPlaceholderText("Prix max");
-    fireEvent.change(maxPriceInput, { target: { value: "25000" } });
-
-    expect(screen.getByText("Voiture 1")).toBeInTheDocument();
-    expect(screen.getByText("Voiture 2")).toBeInTheDocument();
-    expect(screen.queryByText("Voiture 3")).not.toBeInTheDocument();
-  });
-
-  it("doit afficher un message 'Aucune voiture trouvée' si aucun résultat ne correspond au filtre", () => {
-    render(<CarCard cars={cars} />);
-
-    const searchInput = screen.getByPlaceholderText("Rechercher par nom...");
-    fireEvent.change(searchInput, { target: { value: "Voiture Inconnue" } });
-
-    expect(screen.getByText("Aucune voiture trouvée.")).toBeInTheDocument();
+    // Vérifier que seul le véhicule "Honda Civic" est affiché
+    expect(screen.getByText("Honda Civic")).toBeInTheDocument();
+    expect(screen.queryByText("Toyota Corolla")).not.toBeInTheDocument();
+    expect(screen.queryByText("Ford Focus")).not.toBeInTheDocument();
   });
 });

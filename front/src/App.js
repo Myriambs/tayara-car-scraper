@@ -8,9 +8,6 @@ const CarList = () => {
   const [error, setError] = useState(null); // Gestion des erreurs
 
 
-
-
-
   // Utilisation de useEffect pour récupérer les données après le montage du composant
   useEffect(() => {
     fetchCars(); // Appel de la fonction pour récupérer les voitures
