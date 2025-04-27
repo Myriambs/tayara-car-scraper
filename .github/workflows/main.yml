@@ -1,0 +1,31 @@
+name: CI Pipeline - Playwright Tests
+
+on:
+  push:
+    branches:
+      - main  # Ou la branche sur laquelle tu souhaites que l'action soit lancée
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Utilise la version de Node.js appropriée
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Playwright tests
+        run: npm test
+        env:
+          CI: true  # Déclenche l'environnement CI pour Playwright (optionnel)
+
