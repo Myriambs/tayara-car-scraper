@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import "./CarCard.css";
 
 function CarCard({ cars }) {
+  console.log('cars', cars);
   const [filters, setFilters] = useState({
     searchTerm: "",
     minPrice: "",
@@ -73,7 +74,7 @@ const matchMax = maxPrice === "" || Number(price) <= Number(maxPrice);
           <h2>{car.name}</h2>
           <p>{car.price} TND</p>
           <a
-            href={`https://www.tayara.tn${car.url}`}
+            href={`${car.url}`}
             target="_blank"
             rel="noopener noreferrer"
           >

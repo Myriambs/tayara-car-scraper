@@ -82,6 +82,6 @@ Vérifier que tout fonctionne sans erreur   all is good sof direction du lien
 # Tests de Régression 
 done modification de performance du code avec des composants rien  n'a changé 
 
-# on passe ainsi a Tests Automatisés 
+# on passe ainsi a Tests Automatisés ne pas oublier les test unitaires 
 
 

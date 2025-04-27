@@ -13,19 +13,29 @@ async function scrapeCars() {
   const page = await browser.newPage();
   await page.goto('https://www.tayara.tn/ads/k/VOITURE/');
   await page.waitForSelector('article.mx-0');
-  
+
   const cars = await page.evaluate(() => {
     const carElements = document.querySelectorAll('article.mx-0');
     const carsData = [];
-
     carElements.forEach(car => {
       const name = car.querySelector('.card-title')?.innerText;
       const image = car.querySelector('img')?.src;
       const url = car.querySelector('a')?.href;
-
-      if (name && image && url) {
-        carsData.push({ name, image, url });
+      // Extraction du prix depuis les balises <span> dans la balise <data>
+      let price = 'Pas de prix ici'; // valeur par défaut
+    const priceDataElement = car.querySelector('data');
+    if (priceDataElement) {
+      const priceValue = priceDataElement.getAttribute('value');
+      if (priceValue) {
+        price = priceValue ; // Ajoute DT
       }
+    }
+  // Condition pour vérifier si le prix est présent
+ 
+    if (name && image && url) {
+      carsData.push({ name, image, url, price });
+    }
+
     });
 
     return carsData;
