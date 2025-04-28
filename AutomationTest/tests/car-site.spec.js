@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.skip('La page de voitures se charge', async ({ page }) => {
+test('La page de voitures se charge', async ({ page }) => {
     await page.goto('http://localhost:3000'); // ou ton vrai site déployé
     await page.waitForTimeout(5000); // Attendre 2 secondes pour que la page se charge
     await page.waitForSelector('h1'); // Attendre que le titre soit visible
@@ -9,7 +9,7 @@ test.skip('La page de voitures se charge', async ({ page }) => {
     await expect(title).toBe("React App");
   });
 
-  test.skip('filtre les voitures par nom', async ({ page }) => {
+  test('filtre les voitures par nom', async ({ page }) => {
     await page.goto('http://localhost:3000'); // Remplace par l'URL de ton app
     
     // Saisir un terme de recherche
@@ -21,7 +21,7 @@ test.skip('La page de voitures se charge', async ({ page }) => {
 
   });
   
-  test.skip('filtre les voitures par prix', async ({ page }) => {
+  test('filtre les voitures par prix', async ({ page }) => {
     await page.goto('http://localhost:3000'); // Remplace par l'URL de ton app
     
     // Appliquer les filtres de prix
@@ -33,7 +33,7 @@ test.skip('La page de voitures se charge', async ({ page }) => {
     await expect(result).toBe("Aucune voiture trouvée.");
   });
 
-  test('ouvrir un autre onglet et vérifier son URL et son contenu', async ({ page }) => {
+  test.skip('ouvrir un autre onglet et vérifier son URL et son contenu', async ({ page }) => {
     // Accéder à la page principale
     await page.goto('http://localhost:3000'); // Remplace par l'URL de ton app
     
