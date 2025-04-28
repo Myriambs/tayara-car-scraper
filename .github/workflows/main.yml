@@ -38,11 +38,11 @@ jobs:
 
       # ========== BACKEND ==========
       - name: Install Backend dependencies
-        working-directory: ./backend
+        working-directory: ./back
         run: npm install
 
       - name: Test Backend
-        working-directory: ./backend
+        working-directory: ./back
         run: |
           if [ -f package.json ] && grep -q "\"test\":" package.json; then
             npm test
