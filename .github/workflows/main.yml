@@ -12,12 +12,14 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     container:
-      image: node:18  # Use a Node.js Docker container
+      image: node:18  # Utiliser un conteneur Docker avec Node.js
 
     steps:
+      # 1. Checkout du code
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # 2. Configuration de Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -40,16 +42,22 @@ jobs:
       - name: Install Backend dependencies
         working-directory: ./back
         run: npm install
-        
+
       # ========== AUTOMATION TESTS ==========
       - name: Install Playwright dependencies
         working-directory: ./AutomationTest
         run: npm install
 
+      # Étape pour installer les dépendances systèmes nécessaires à Playwright
+      - name: Install Playwright dependencies (system-level)
+        run: npx playwright install-deps
+
+      # Installer les navigateurs pour Playwright
       - name: Install Playwright Browsers
         working-directory: ./AutomationTest
         run: npx playwright install
 
+      # Exécuter les tests Playwright
       - name: Run Playwright Tests
         working-directory: ./AutomationTest
-        run: npm run test  # or your specific Playwright command
+        run: npm run test  # ou la commande spécifique pour tes tests Playwright
