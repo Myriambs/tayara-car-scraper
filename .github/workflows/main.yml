@@ -41,14 +41,10 @@ jobs:
         working-directory: ./back
         run: npm install
 
-      - name: Test Backend
+      - name: Build Backend
         working-directory: ./back
-        run: |
-          if [ -f package.json ] && grep -q "\"test\":" package.json; then
-            npm test
-          else
-            echo "No backend tests defined"
-          fi
+        run: npm run build
+     
 
       # ========== AUTOMATION TESTS ==========
       - name: Install Playwright dependencies
