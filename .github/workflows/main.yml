@@ -9,40 +9,39 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     container:
-      image: node:18  # Use a Node.js Docker container (you can specify a different version if needed)
+      image: node:18  # Use a Node.js Docker container
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18'
 
-     # ========== FRONTEND ==========
-- name: Install Frontend dependencies
-  working-directory: ./front
-  run: npm install
+      # ========== FRONTEND ==========
+      - name: Install Frontend dependencies
+        working-directory: ./front
+        run: npm install
 
-- name: Build Frontend
-  working-directory: ./front
-  run: npm run build
+      - name: Build Frontend
+        working-directory: ./front
+        run: npm run build
 
-- name: Run Frontend Unit Tests
-  working-directory: ./front
-  run: npm test -- --watchAll=false
+      - name: Run Frontend Unit Tests
+        working-directory: ./front
+        run: npm test -- --watchAll=false
 
       # ========== BACKEND ==========
       - name: Install Backend dependencies
         working-directory: ./backend
         run: npm install
 
-      - name: Test Backend (optional)
+      - name: Test Backend
         working-directory: ./backend
         run: |
           if [ -f package.json ] && grep -q "\"test\":" package.json; then
