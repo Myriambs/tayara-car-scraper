@@ -40,12 +40,7 @@ jobs:
       - name: Install Backend dependencies
         working-directory: ./back
         run: npm install
-
-      - name: Build Backend
-        working-directory: ./back
-        run: npm run build
-     
-
+        
       # ========== AUTOMATION TESTS ==========
       - name: Install Playwright dependencies
         working-directory: ./AutomationTest
